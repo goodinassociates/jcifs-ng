@@ -108,6 +108,15 @@ public class NtlmPasswordAuthentication extends NtlmPasswordAuthenticator {
     }
 
 
+    public NtlmPasswordAuthentication ( String domain, String username, String password ) {
+        super(
+            domain != null ? domain :  "",
+            username != null ? username :  "GUEST",
+            password != null ? password : "" ,
+            (AuthenticationType) null);
+        
+    }
+    
     /**
      * Create an <tt>NtlmPasswordAuthentication</tt> object with raw password
      * hashes. This is used exclusively by the <tt>jcifs.http.NtlmSsp</tt>

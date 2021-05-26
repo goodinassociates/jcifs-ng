@@ -385,7 +385,9 @@ public class SmbFile extends URLConnection implements SmbResource, SmbConstants 
     public SmbFile ( String url ) throws MalformedURLException {
         this(new URL(null, url, SingletonContext.getInstance().getUrlHandler()));
     }
-
+    public SmbFile ( String url , NtlmPasswordAuthentication ntlmPasswordAuthentication) throws MalformedURLException {
+        this(new URL(null, url, SingletonContext.getInstance().getUrlHandler()),ntlmPasswordAuthentication);
+    }
 
     /**
      * Constructs an SmbFile representing a resource on an SMB network such
@@ -400,6 +402,9 @@ public class SmbFile extends URLConnection implements SmbResource, SmbConstants 
         this(url, SingletonContext.getInstance().withCredentials(new NtlmPasswordAuthentication(SingletonContext.getInstance(), url.getUserInfo())));
     }
 
+    public SmbFile ( URL url , NtlmPasswordAuthentication ntlmPasswordAuthentication) throws MalformedURLException {
+        this(url, SingletonContext.getInstance().withCredentials(ntlmPasswordAuthentication));
+    }
 
     /**
      * Constructs an SmbFile representing a resource on an SMB network such
@@ -1312,6 +1317,11 @@ public class SmbFile extends URLConnection implements SmbResource, SmbConstants 
     }
 
 
+   // @Override
+    public void renameTo ( SmbFile d ) throws SmbException {
+        renameTo(d, false);
+    }
+    
     @Override
     public void renameTo ( SmbResource d ) throws SmbException {
         renameTo(d, false);
